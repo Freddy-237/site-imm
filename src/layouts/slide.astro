@@ -1,0 +1,35 @@
+---
+const images = [
+  { src: "/images/slide1.jpg", alt: "Image 1", link: "#" },
+  { src: "/images/slide2.jpg", alt: "Image 2", link: "#" },
+  { src: "/images/slide3.jpg", alt: "Image 3", link: "#" },
+  { src: "/images/f-01.png", alt: "Image 4", link: "#" },
+];
+let current = 0;
+function next() { current = (current + 1) % images.length; }
+function prev() { current = (current - 1 + images.length) % images.length; }
+
+// Timer pour défilement automatique
+if (typeof window !== "undefined") {
+  setInterval(() => {
+    const track = document.querySelector('.slider-track');
+    if (track) {
+      track.scrollBy({left: window.innerWidth, behavior: 'smooth'});
+    }
+  }, 1000);
+}
+---
+
+<div class="slider">
+  <button class="slider-btn left" onclick="this.parentElement.querySelector('.slider-track').scrollBy({left: -window.innerWidth, behavior: 'smooth'})">&#10094;</button>
+  <div class="slider-track">
+    {images.map((img) => (
+      <a href={img.link} class="slide" tabindex="0">
+        <img src={img.src} alt={img.alt} />
+      </a>
+    ))}
+  </div>
+  <button class="slider-btn right" onclick="this.parentElement.querySelector('.slider-track').scrollBy({left: window.innerWidth, behavior: 'smooth'})">&#10095;</button>
+</div>
+
+
